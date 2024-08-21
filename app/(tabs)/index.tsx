@@ -1,31 +1,24 @@
-import { StyleSheet } from 'react-native';
+import { View, Text, Image, Touchable, TouchableOpacity } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import RideLocations from "@/components/Main/RideLocations";
+import Banner from "@/components/Main/Banner";
+import Header from "@/components/Layout/Header";
+import RideHistory from "@/components/Main/RideHistory";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-
-export default function TabOneScreen() {
+const Page = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
-  );
-}
+    <SafeAreaView className="flex-1 space-y-4  bg-neutral-50">
+      <View className="space-y-4">
+        <Header />
+        <RideLocations />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+        <Banner />
+        <RideHistory />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Page;
