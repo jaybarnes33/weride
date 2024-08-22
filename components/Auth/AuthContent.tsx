@@ -22,7 +22,7 @@ const AuthContent = ({ children }: { children: ReactNode }) => {
 
       webSocketManager
         .getSocket()
-        ?.emit("registerRider", { id: user._id, location: location });
+        ?.emit("registerClient", { id: user._id, location: location });
     })();
   }, []);
   return <>{children}</>;

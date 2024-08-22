@@ -1,7 +1,6 @@
 import { View, Text, Image, Touchable, TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 import RideLocations from "@/components/Main/RideLocations";
 import Banner from "@/components/Main/Banner";
 import Header from "@/components/Layout/Header";

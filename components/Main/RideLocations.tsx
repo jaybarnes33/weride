@@ -51,7 +51,7 @@ const RideLocations = () => {
                 setDropoff(data.details);
                 navigate(
                   //@ts-ignore
-                  "ride",
+                  "PlanRide",
                   { pickup: pickup, dropoff: data.details }
                 );
               }}

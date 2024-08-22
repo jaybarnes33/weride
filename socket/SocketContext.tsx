@@ -16,6 +16,7 @@ export const WebSocketProvider: React.FC<WebSocketContextType> = ({
   children,
   webSocketManager,
 }) => {
+  webSocketManager.connect(`ws://${process.env.EXPO_PUBLIC_SOCKET}`);
   return (
     <WebSocketContext.Provider value={{ webSocketManager }}>
       {children}
