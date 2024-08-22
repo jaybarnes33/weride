@@ -1,7 +1,4 @@
-export const API_URL =
-  // process.env.NODE_ENV === "development"
-  //   ? "http://172.20.10.2:8001/api/v1"
-  "http://localhost:8000";
+export const API_URL = process.env.EXPO_PUBLIC_API!;
 
 /** Creates a complete URL to the API
  * @param path The path to the API endpoint. For example, `/users/login`
