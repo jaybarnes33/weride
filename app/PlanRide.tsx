@@ -43,18 +43,18 @@ const Ride = () => {
       name: "Shared",
       wait: "10 - 15mins",
       image: "🚕",
-      price: "50 - 90",
+      price: 5,
     },
     {
       name: "Comfort",
       wait: "5 - 10mins",
-      price: "75 - 100",
+      price: 15,
       image: "🚗",
     },
     {
       name: "Express",
       wait: "5 - 10mins",
-      price: "70 - 100",
+      price: 20,
       image: "🚙",
     },
   ];
@@ -119,6 +119,7 @@ const Ride = () => {
           placeName: dropoff.name ?? dropoff.formatted_address,
         },
         rideType,
+        price: rideType?.price,
       });
       setRequest(data);
     } catch (error: any) {
@@ -296,6 +297,9 @@ const Ride = () => {
                     <Text className="font-bold">{type.name}</Text>
                     <Text className="text-gray-400">{type.wait} wait</Text>
                   </View>
+                  <Text className="font-bold text-xl">
+                    GH₵{type.price.toFixed(2)}
+                  </Text>
                 </View>
               </TouchableOpacity>
             ))}

@@ -149,7 +149,8 @@ const Ride = () => {
           {complete && (
             <View>
               <Text>
-                You have arrived at your destination, thanks for riding with us
+                You have arrived at your destination, thanks for riding with us.
+                You will be charged GH₵{details.price.toFixed(2)}
               </Text>
             </View>
           )}
