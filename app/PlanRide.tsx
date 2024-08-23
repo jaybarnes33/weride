@@ -110,13 +110,13 @@ const Ride = () => {
         pickupLocation: {
           latitude: pickup.geometry.location.lat,
           longitude: pickup.geometry.location.lng,
-          placeName: pickup.name,
+          placeName: pickup.name ?? pickup.formatted_address,
         },
         passenger: user?._id,
         dropoffLocation: {
           latitude: dropoff.geometry.location.lat,
           longitude: dropoff.geometry.location.lng,
-          placeName: dropoff.name,
+          placeName: dropoff.name ?? dropoff.formatted_address,
         },
         rideType,
       });
@@ -278,7 +278,7 @@ const Ride = () => {
           </TouchableOpacity>
           <Text className="text-xs">
             {pickup.name ?? pickup.formatted_address} -{" "}
-            {dropoff.geometry.location.lat}, {dropoff.geometry.location.lng}
+            {dropoff.name ?? dropoff.formatted_address}
           </Text>
         </View>
         {!rideType?.name && !showShared && !error?.length ? (

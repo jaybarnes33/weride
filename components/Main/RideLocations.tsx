@@ -38,7 +38,7 @@ const RideLocations = () => {
           <Image source={require("@/assets/images/locations-side.png")} />
           <View className="flex-1 justify-between">
             <GooglePlacesInput
-              value={pickup?.formatted_address as string}
+              value={pickup?.address_components[0].long_name as string}
               label="Pickup"
               onSelect={(data) => setPickup(data.details)}
               left={<Feather name="search" />}
