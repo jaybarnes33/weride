@@ -23,7 +23,7 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     longitude: 0,
   });
 
-  const fallbackLocation = {
+  const fallBackLocation = {
     latitude: 5.29822,
     longitude: -2.0,
   };
@@ -41,7 +41,8 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
             },
             (location) => {
               setLocation({
-                ...fallbackLocation,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
               });
             }
           );
@@ -50,7 +51,9 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     })();
   }, []);
   return (
-    <LocationContext.Provider value={{ location, setLocation }}>
+    <LocationContext.Provider
+      value={{ location: fallBackLocation, setLocation }}
+    >
       {children}
     </LocationContext.Provider>
   );

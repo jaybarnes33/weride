@@ -7,7 +7,11 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 
 import { useRoute } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-import { ArrowLeftIcon, MapPinIcon, PhoneIcon } from "react-native-heroicons/outline";
+import {
+  ArrowLeftIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "react-native-heroicons/outline";
 import Colors from "@/constants/Colors";
 
 import { RideRequest } from "@/types/ride";
@@ -16,15 +20,15 @@ import { useWebSocket } from "@/socket/SocketContext";
 const Ride = () => {
   const { location, setLocation } = useLocation();
   const [start, setStart] = useState(false);
-const [arrived, setArrived] = useState(false);
-const[ complete, setComplete] = useState(false);
+  const [arrived, setArrived] = useState(false);
+  const [complete, setComplete] = useState(false);
   const { back } = useRouter();
   const { details } = useRoute().params as { details: RideRequest };
 
   const { dropoffLocation, pickupLocation } = details;
 
   const [directions, setDirections] = useState([]);
-const {webSocketManager} = useWebSocket();
+  const { webSocketManager } = useWebSocket();
   useEffect(() => {
     if (location && dropoffLocation) {
       const origin = `${location.longitude},${location.latitude}`;
@@ -51,26 +55,22 @@ const {webSocketManager} = useWebSocket();
     }
   }, [dropoffLocation, pickupLocation]);
 
-
-useEffect(() => {
-  webSocketManager.getSocket()?.on("driver-arrived", (data) => {
-    console.log("Driver arrived", data);
-    setArrived(true);
-    
-  });
-  webSocketManager.getSocket()?.on("ride-started", (data) => {
-    console.log("Ride started", data);
-    setArrived(false);
-    setStart(true);
-  });
-  webSocketManager.getSocket()?.on("ride-completed", (data) => {
-    console.log("Ride completed", data);
-    setStart(false);
-   setComplete(true);
-  });
-
-}
-, [webSocketManager]);
+  useEffect(() => {
+    webSocketManager.getSocket()?.on("driver-arrived", (data) => {
+      console.log("Driver arrived", data);
+      setArrived(true);
+    });
+    webSocketManager.getSocket()?.on("ride-started", (data) => {
+      console.log("Ride started", data);
+      setArrived(false);
+      setStart(true);
+    });
+    webSocketManager.getSocket()?.on("ride-completed", (data) => {
+      console.log("Ride completed", data);
+      setStart(false);
+      setComplete(true);
+    });
+  }, [webSocketManager]);
   return (
     <View className="relative flex-1">
       <TouchableOpacity className="absolute top-10 z-50 mx-5" onPress={back}>
@@ -135,21 +135,27 @@ useEffect(() => {
           <PhoneIcon color={Colors.dark.primary} />
         </TouchableOpacity>
         <View className="space-x-3  ">
-          {
-            !arrived && !start && !complete && 
-          <Text>{details.driver.name} is on the way, please wait for them to arrive </Text>  
-          }
-      {
-        arrived && <Text>
-          Your driver has arrived, please proceed to the pickup location
-        </Text>
-      }
-         {complete && <Text>
-          You have arrived at your destination, thanks for riding with us
-          </Text>}
-          {start && !complete && <Text>
-            Trip started, please buckle up and enjoy the ride
-             </Text>}
+          {!arrived && !start && !complete && (
+            <Text>
+              {details.driver.name} is on the way, please wait for them to
+              arrive{" "}
+            </Text>
+          )}
+          {arrived && (
+            <Text>
+              Your driver has arrived, please proceed to the pickup location
+            </Text>
+          )}
+          {complete && (
+            <View>
+              <Text>
+                You have arrived at your destination, thanks for riding with us
+              </Text>
+            </View>
+          )}
+          {start && !complete && (
+            <Text>Trip started, please buckle up and enjoy the ride</Text>
+          )}
         </View>
       </View>
     </View>
