@@ -37,7 +37,7 @@ export const getTokens = async () => {
 };
 
 export const getImageUrl = (url: string) => {
-  const path = `${process.env.EXPO_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${url}`;
+  const path = `${process.env.EXPO_PUBLIC_SUPABASE_URL}storage/v1/object/public/${url}`;
   console.log(path);
   return path;
 };

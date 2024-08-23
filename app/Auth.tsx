@@ -11,8 +11,6 @@ import { useNavigation, useRouter } from "expo-router";
 import axios from "axios";
 import { createURL } from "@/utils/api";
 import { useRoute } from "@react-navigation/native";
-import { ArrowCircleLeft } from "iconsax-react-native";
-import { Feather } from "@expo/vector-icons";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import Colors from "@/constants/Colors";
 
@@ -40,13 +38,14 @@ const Auth = () => {
       //@ts-ignore
       navigate("Otp", { id: data.id });
     } catch (error: any) {
+      console.log(JSON.stringify(error));
       setError(error.message ?? "Could not request OTP");
     } finally {
       setLoading(false);
     }
   };
   return (
-    <SafeAreaView className="px-4 space-y-4">
+    <SafeAreaView className="px-4 pt-8 space-y-4">
       <TouchableOpacity className="absolute top-10 z-50 mx-5" onPress={back}>
         <ArrowLeftIcon color={Colors.light.primary} />
       </TouchableOpacity>

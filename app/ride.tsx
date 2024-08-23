@@ -30,7 +30,7 @@ const Ride = () => {
         ? `${dropoffLocation.longitude},${dropoffLocation.latitude}`
         : `${pickupLocation.longitude},${pickupLocation.latitude}`;
       fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/walking/${origin};${destination}?geometries=geojson&access_token=${process.env.EXPO_PUBLIC_MAPBOX}&steps=true`
+        `https://api.mapbox.com/directions/v5/mapbox/driving/${origin};${destination}?geometries=geojson&access_token=${process.env.EXPO_PUBLIC_MAPBOX}&steps=true`
       )
         .then(async (response) => {
           const data = await response.json();
@@ -111,7 +111,7 @@ const Ride = () => {
         <Text className="text-xl font-bold">Ride Details</Text>
         <View className="space-x-3  ">
           <Text>
-            Picking up {details.passenger.name} at{" "}
+            Waiting for {details.driver.name} to pick you up at{" "}
             {details.pickupLocation.placeName}
           </Text>
         </View>

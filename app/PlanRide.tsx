@@ -71,6 +71,7 @@ const Ride = () => {
     pickup: GooglePlaceDetail;
     dropoff: GooglePlaceDetail;
   };
+
   const handleRideType = async (type: (typeof types)[0]) => {
     if (type.name === "Shared") {
       showShared ? setShowShared(false) : setShowShared(true);
@@ -109,13 +110,13 @@ const Ride = () => {
         pickupLocation: {
           latitude: pickup.geometry.location.lat,
           longitude: pickup.geometry.location.lng,
-          placeName: pickup.formatted_address,
+          placeName: pickup.name,
         },
         passenger: user?._id,
         dropoffLocation: {
           latitude: dropoff.geometry.location.lat,
           longitude: dropoff.geometry.location.lng,
-          placeName: dropoff.formatted_address,
+          placeName: dropoff.name,
         },
         rideType,
       });
@@ -133,7 +134,7 @@ const Ride = () => {
       const origin = `${location.longitude},${location.latitude}`;
       const destination = `${dropoff.geometry.location.lng},${dropoff.geometry.location.lat}`;
       fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/walking/${origin};${destination}?geometries=geojson&access_token=${process.env.EXPO_PUBLIC_MAPBOX}&steps=true`
+        `https://api.mapbox.com/directions/v5/mapbox/driving/${origin};${destination}?geometries=geojson&access_token=${process.env.EXPO_PUBLIC_MAPBOX}&steps=true`
       )
         .then(async (response) => {
           const data = await response.json();
@@ -151,20 +152,6 @@ const Ride = () => {
         .catch((e) => console.log(e));
     }
   }, [dropoff]);
-
-  useEffect(() => {
-    if (request) {
-      const interval = setInterval(async () => {
-        const { data } = await axios.get(
-          createURL(`/api/requests/${request._id}`)
-        );
-        if (data.status === "accepted") {
-          navigate(["ride", { details: data }] as never);
-        }
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, []);
 
   const generateRandomPosition = (baseLocation: LatLng) => {
     const radius = 0.01; // Adjust the radius as needed
@@ -200,7 +187,8 @@ const Ride = () => {
   const { webSocketManager } = useWebSocket();
 
   webSocketManager?.getSocket()?.on("driver-assigned", (data) => {
-    navigate(["ride", { details: data }] as never);
+    //@ts-expect-error assignment of string to never
+    navigate("ride", { details: data });
   });
   return (
     <View className="relative flex-1">
@@ -288,7 +276,10 @@ const Ride = () => {
           <TouchableOpacity className="h-9 w-9 bg-primary items-center justify-center shadow rounded-full">
             <MapPinIcon color={"white"} />
           </TouchableOpacity>
-          <Text className="text-xs">{dropoff.formatted_address}</Text>
+          <Text className="text-xs">
+            {pickup.name ?? pickup.formatted_address} -{" "}
+            {dropoff.geometry.location.lat}, {dropoff.geometry.location.lng}
+          </Text>
         </View>
         {!rideType?.name && !showShared && !error?.length ? (
           <View className="bg-white mx-4  z-50 p-5   rounded-xl">
