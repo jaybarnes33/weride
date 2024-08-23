@@ -31,10 +31,9 @@ const Ride = () => {
   const { webSocketManager } = useWebSocket();
   useEffect(() => {
     if (location && dropoffLocation) {
-      const origin = `${location.longitude},${location.latitude}`;
-      const destination = start
-        ? `${dropoffLocation.longitude},${dropoffLocation.latitude}`
-        : `${pickupLocation.longitude},${pickupLocation.latitude}`;
+      const origin = ` ${pickupLocation.longitude},${pickupLocation.latitude}`;
+      const destination = `${dropoffLocation.longitude},${dropoffLocation.latitude}`;
+
       fetch(
         `https://api.mapbox.com/directions/v5/mapbox/driving/${origin};${destination}?geometries=geojson&access_token=${process.env.EXPO_PUBLIC_MAPBOX}&steps=true`
       )

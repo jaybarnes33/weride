@@ -56,6 +56,7 @@ const Account = () => {
   const handleFormSubmit = async () => {
     try {
       setLoading(true);
+      console.log({ user: user?._id });
 
       const { data: file, error } = await uploadFile(image!, user?._id);
       if (file || !image?.base64) {

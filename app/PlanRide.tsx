@@ -82,7 +82,7 @@ const Ride = () => {
       setShowShared(false);
       setRideType(type);
     }
-    await requestRide();
+    await requestRide(type.price);
     setTimeout(() => {
       setRideType(undefined);
     }, 300000);
@@ -103,7 +103,7 @@ const Ride = () => {
     }
   };
 
-  const requestRide = async () => {
+  const requestRide = async (price: number) => {
     try {
       setRequesting(true);
       const { data } = await axios.post(createURL("/api/requests/"), {
@@ -118,8 +118,8 @@ const Ride = () => {
           longitude: dropoff.geometry.location.lng,
           placeName: dropoff.name ?? dropoff.formatted_address,
         },
-        rideType,
-        price: rideType?.price,
+
+        price,
       });
       setRequest(data);
     } catch (error: any) {
@@ -291,13 +291,13 @@ const Ride = () => {
                 key={index}
                 onPress={() => handleRideType(type)}
               >
-                <View className="flex-row  space-x-4 items-center mt-3">
+                <View className="flex-row  space-x-4 justify-between items-center mt-3">
                   <Text className="text-4xl">{type.image}</Text>
                   <View>
                     <Text className="font-bold">{type.name}</Text>
                     <Text className="text-gray-400">{type.wait} wait</Text>
                   </View>
-                  <Text className="font-bold text-xl">
+                  <Text className="font-bold text-base">
                     GH₵{type.price.toFixed(2)}
                   </Text>
                 </View>
