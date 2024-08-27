@@ -7,15 +7,15 @@ import { getTokens } from "@/utils";
 const index = () => {
   const { navigate } = useNavigation();
 
-  useEffect(() => {
-    (async () => {
-      const tokens = await getTokens();
-      if (tokens?.accessToken?.length! > 0) {
-        //@ts-expect-error assignment of string to never
-        navigate("(tabs)");
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const tokens = await getTokens();
+  //     if (tokens?.accessToken?.length! > 0) {
+  //       //@ts-expect-error assignment of string to never
+  //       navigate("(tabs)");
+  //     }
+  //   })();
+  // }, []);
   return (
     <SafeAreaView className="flex-1  pt-10 px-4">
       <View className="my-auto space-y-4">
